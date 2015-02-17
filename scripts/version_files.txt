@@ -1,0 +1,6 @@
+bytesize/__init__.py
+__version__ = '%s'
+doc/conf.py
+version = '%s'
+doc/conf.py
+release = '%s'

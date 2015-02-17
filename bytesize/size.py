@@ -1,7 +1,7 @@
 # size.py
-# Python module to represent storage sizes
+# Python module to represent sizes in bytes.
 #
-# Copyright (C) 2010  Red Hat, Inc.
+# Copyright (C) 2015  Red Hat, Inc.
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions of
@@ -18,6 +18,7 @@
 # Red Hat, Inc.
 #
 # Red Hat Author(s): David Cantrell <dcantrell@redhat.com>
+#                    Anne Mulhern <amulhern@redhat.com>
 
 import locale
 import re
@@ -243,7 +244,7 @@ class Size(object):
                 raise SizeConstructionError("units parameter is meaningless when Size value is passed")
             self.magnitude = value.magnitude
         else:
-            raise SizeConstructionError("invalid value %s for size" % value)
+            raise SizeConstructionError("invalid value for size")
 
     # Force str and unicode types since the translated sizespec may be unicode
     def _toString(self):

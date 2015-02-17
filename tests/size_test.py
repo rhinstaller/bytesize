@@ -29,9 +29,9 @@ import unittest
 from decimal import Decimal
 
 from bytesize.i18n import _
-from bytesize.errors import SizeDisplayError, SizeNonsensicalOpError
-from bytesize.errors import SizeParseError, SizeRoundingError
-from bytesize.errors import SizeUnrepresentableOpError
+from bytesize.errors import SizeConstructionError, SizeDisplayError
+from bytesize.errors import SizeNonsensicalOpError, SizeParseError
+from bytesize.errors import SizeRoundingError, SizeUnrepresentableOpError
 from bytesize import size
 from bytesize.size import Size, B, KiB, MiB, GiB, TiB
 
@@ -44,6 +44,8 @@ class SizeTestCase(unittest.TestCase):
         s = Size(500)
         with self.assertRaises(SizeDisplayError):
             s.humanReadable(max_places=-1)
+        with self.assertRaises(SizeDisplayError):
+            s.humanReadable(min_value=-1)
 
         self.assertEqual(s.humanReadable(max_places=0), "500 B")
 
@@ -159,6 +161,15 @@ class SizeTestCase(unittest.TestCase):
         self.assertEquals(Size(1/1025.0, KiB), Size(0))
         self.assertEquals(Size(1/1023.0, KiB), Size(1))
 
+    def testConstructor(self):
+        with self.assertRaises(SizeConstructionError):
+            Size("1.1.1", KiB)
+        self.assertEqual(Size(Size(0)), Size(0))
+        with self.assertRaises(SizeConstructionError):
+            Size(Size(0), KiB)
+        with self.assertRaises(SizeConstructionError):
+            Size(B)
+
 class TranslationTestCase(unittest.TestCase):
 
     def __init__(self, methodName='runTest'):
@@ -225,10 +236,18 @@ class TranslationTestCase(unittest.TestCase):
             with self.assertRaises(SizeParseError):
                 size.parseSpec("Ki")
 
+            # Can't parse a number with bad units specification
+            with self.assertRaises(SizeParseError):
+                size.parseSpec("1 ersatzbyte")
+
+            with self.assertRaises(SizeParseError):
+                size.parseSpec("")
+
             self.assertEqual(size.parseSpec("2 %s" % _("K")), Decimal(2048))
             self.assertEqual(size.parseSpec("2 %s" % _("Ki")), Decimal(2048))
             self.assertEqual(size.parseSpec("2 %s" % _("g")), Decimal(2 * 1024 ** 3))
             self.assertEqual(size.parseSpec("2 %s" % _("G")), Decimal(2 * 1024 ** 3))
+            self.assertEqual(size.parseSpec("2"), Decimal(2))
 
     def testTranslated(self):
         s = Size(56.19, MiB)
@@ -337,24 +356,34 @@ class UtilityMethodsTestCase(unittest.TestCase):
         self.assertEqual(2 * s, Size(4, GiB))
         with self.assertRaises(SizeUnrepresentableOpError):
             s * s # pylint: disable=pointless-statement
+        with self.assertRaises(SizeNonsensicalOpError):
+            s * "str" # pylint: disable=pointless-statement
 
         # / truediv, retains fractional quantities
         self.assertEqual(s / s, Decimal(1))
         self.assertEqual(s / 2, Size(1, GiB))
         with self.assertRaises(SizeNonsensicalOpError):
             2 / s # pylint: disable=pointless-statement
+        with self.assertRaises(SizeNonsensicalOpError):
+            s / "str" # pylint: disable=pointless-statement
+        with self.assertRaises(SizeNonsensicalOpError):
+            "str" / s # pylint: disable=pointless-statement
 
         # // floordiv
         self.assertEqual(s // s, 1)
         self.assertEqual(s // 2, Size(1, GiB))
         with self.assertRaises(SizeNonsensicalOpError):
             2 // s # pylint: disable=pointless-statement
+        with self.assertRaises(SizeNonsensicalOpError):
+            s // "str" # pylint: disable=pointless-statement
 
         # %
         self.assertEqual(s % s, Size(0))
         self.assertEqual(s % 2, Size(0))
         with self.assertRaises(SizeNonsensicalOpError):
             1024 % Size(127) # pylint: disable=expression-not-assigned, pointless-statement
+        with self.assertRaises(SizeNonsensicalOpError):
+            s % "str" # pylint: disable=expression-not-assigned, pointless-statement
 
         # **
         with self.assertRaises(SizeNonsensicalOpError):
@@ -371,6 +400,13 @@ class UtilityMethodsTestCase(unittest.TestCase):
         with self.assertRaises(SizeNonsensicalOpError):
             1 < Size(32, TiB) # pylint: disable=expression-not-assigned
 
+        # <=
+        self.assertTrue(Size(0, MiB) <= Size(32))
+        with self.assertRaises(SizeNonsensicalOpError):
+            Size(0) <= 1 # pylint: disable=expression-not-assigned
+        with self.assertRaises(SizeNonsensicalOpError):
+            1 <= Size(32, TiB) # pylint: disable=expression-not-assigned
+
         # >
         self.assertTrue(Size(32, MiB) > Size(32))
         with self.assertRaises(SizeNonsensicalOpError):
@@ -378,11 +414,23 @@ class UtilityMethodsTestCase(unittest.TestCase):
         with self.assertRaises(SizeNonsensicalOpError):
             1 > Size(0, TiB) # pylint: disable=expression-not-assigned
 
+        # >=
+        self.assertTrue(Size(32, MiB) >= Size(32))
+        with self.assertRaises(SizeNonsensicalOpError):
+            Size(32) >= 1 # pylint: disable=expression-not-assigned
+        with self.assertRaises(SizeNonsensicalOpError):
+            1 >= Size(0, TiB) # pylint: disable=expression-not-assigned
+
+        # !=
+        self.assertTrue(Size(32, MiB) != Size(32, GiB))
+
         # divmod
         self.assertEqual(divmod(Size(32, MiB), 2), (Size(16, MiB), Size(0)))
         self.assertEqual(divmod(Size(24, MiB), Size(16, MiB)), (1, Size(8, MiB)))
         with self.assertRaises(SizeNonsensicalOpError):
             divmod(2048, Size(12, B))
+        with self.assertRaises(SizeNonsensicalOpError):
+            divmod(s, "str")
 
         # unary +/-
         self.assertEqual(-(Size(32)), Size(-32))
@@ -403,6 +451,9 @@ class UtilityMethodsTestCase(unittest.TestCase):
         self.assertEqual(True and Size(0), Size(0))
         self.assertEqual(Size(1) or True, Size(1))
         self.assertEqual(False or Size(5, MiB), Size(5, MiB))
+
+    def testUnitStr(self):
+        self.assertEqual(size.unitStr(KiB), "KiB")
 
 if __name__ == "__main__":
     unittest.main()

@@ -41,7 +41,6 @@ coverage.xml
 
 # Translations
 *.mo
-*.pot
 
 # Django stuff:
 *.log
@@ -55,3 +54,6 @@ target/
 
 # pylint
 tests/pylint/.pylint.d
+
+ChangeLog
+*.tar.gz

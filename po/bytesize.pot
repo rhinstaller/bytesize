@@ -1,0 +1,158 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-19 16:37-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../bytesize/size.py:48
+msgid "B"
+msgstr ""
+
+#: ../bytesize/size.py:49
+msgid "bytes"
+msgstr ""
+
+#: ../bytesize/size.py:49
+msgid "byte"
+msgstr ""
+
+#: ../bytesize/size.py:54
+msgid "kilo"
+msgstr ""
+
+#: ../bytesize/size.py:54
+msgid "k"
+msgstr ""
+
+#: ../bytesize/size.py:55
+msgid "mega"
+msgstr ""
+
+#: ../bytesize/size.py:55
+msgid "M"
+msgstr ""
+
+#: ../bytesize/size.py:56
+msgid "giga"
+msgstr ""
+
+#: ../bytesize/size.py:56
+msgid "G"
+msgstr ""
+
+#: ../bytesize/size.py:57
+msgid "tera"
+msgstr ""
+
+#: ../bytesize/size.py:57
+msgid "T"
+msgstr ""
+
+#: ../bytesize/size.py:58
+msgid "peta"
+msgstr ""
+
+#: ../bytesize/size.py:58
+msgid "P"
+msgstr ""
+
+#: ../bytesize/size.py:59
+msgid "exa"
+msgstr ""
+
+#: ../bytesize/size.py:59
+msgid "E"
+msgstr ""
+
+#: ../bytesize/size.py:60
+msgid "zetta"
+msgstr ""
+
+#: ../bytesize/size.py:60
+msgid "Z"
+msgstr ""
+
+#: ../bytesize/size.py:61
+msgid "yotta"
+msgstr ""
+
+#: ../bytesize/size.py:61
+msgid "Y"
+msgstr ""
+
+#: ../bytesize/size.py:63
+msgid "kibi"
+msgstr ""
+
+#: ../bytesize/size.py:63
+msgid "Ki"
+msgstr ""
+
+#: ../bytesize/size.py:64
+msgid "mebi"
+msgstr ""
+
+#: ../bytesize/size.py:64
+msgid "Mi"
+msgstr ""
+
+#: ../bytesize/size.py:65
+msgid "gibi"
+msgstr ""
+
+#: ../bytesize/size.py:65
+msgid "Gi"
+msgstr ""
+
+#: ../bytesize/size.py:66
+msgid "tebi"
+msgstr ""
+
+#: ../bytesize/size.py:66
+msgid "Ti"
+msgstr ""
+
+#: ../bytesize/size.py:67
+msgid "pebi"
+msgstr ""
+
+#: ../bytesize/size.py:67
+msgid "Pi"
+msgstr ""
+
+#: ../bytesize/size.py:68
+msgid "exbi"
+msgstr ""
+
+#: ../bytesize/size.py:68
+msgid "Ei"
+msgstr ""
+
+#: ../bytesize/size.py:69
+msgid "zebi"
+msgstr ""
+
+#: ../bytesize/size.py:69
+msgid "Zi"
+msgstr ""
+
+#: ../bytesize/size.py:70
+msgid "yobi"
+msgstr ""
+
+#: ../bytesize/size.py:70
+msgid "Yi"
+msgstr ""

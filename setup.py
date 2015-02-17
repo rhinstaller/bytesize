@@ -1,4 +1,4 @@
-# __init__.py
+# setup.py
 #
 # Copyright (C) 2015  Red Hat, Inc.
 #
@@ -18,4 +18,14 @@
 #
 # Red Hat Author(s): Anne Mulhern <amulhern@redhat.com>
 
-__version__ = '1.0'
+from distutils.core import setup
+
+setup(
+   name='bytesize',
+   version='1.0',
+   description='Python module for sizes in bytes.',
+   author='Anne Mulhern',
+   author_email='amulhern@redhat.com',
+   url='http://python-bytesize.readthedocs.org',
+   packages=['bytesize']
+)
