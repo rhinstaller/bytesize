@@ -47,7 +47,11 @@ coverage.xml
 *.log
 
 # Sphinx documentation
-docs/_build/
+doc/_build/
+doc/bytesize.rst
 
 # PyBuilder
 target/
+
+# pylint
+tests/pylint/.pylint.d
