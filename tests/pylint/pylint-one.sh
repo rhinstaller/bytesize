@@ -19,8 +19,7 @@ pylint_output="$(pylint \
     --load-plugins=intl,pointless-override \
     $DISABLED_WARN_OPTIONS \
     $DISABLED_ERR_OPTIONS \
-    $NON_STRICT_OPTIONS "$@" 2>&1 | \
-    egrep -v -f "$FALSE_POSITIVES" \
+    $NON_STRICT_OPTIONS "$@" 2>&1 \
     )"
 
 # I0011 is the informational "Locally disabling ...." message

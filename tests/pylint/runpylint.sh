@@ -39,8 +39,6 @@ export PYTHONPATH="${PYTHONPATH}:${srcdir}"
 export PYLINTHOME="${builddir}/.pylint.d"
 [ -d "$PYLINTHOME" ] || mkdir "$PYLINTHOME"
 
-export FALSE_POSITIVES="${srcdir}"/pylint-false-positives
-
 # W0212 - Access to a protected member %s of a client class
 export NON_STRICT_OPTIONS="--disable=W0212"
 

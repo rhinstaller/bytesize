@@ -69,3 +69,4 @@ coverage:
 	coverage report --include="bytesize/*"
 	coverage html --include="bytesize/*"
 
+ci: test check
